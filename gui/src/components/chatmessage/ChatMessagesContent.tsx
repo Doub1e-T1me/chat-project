@@ -59,6 +59,12 @@ export function ChatMessagesContent({ chatRoomId }: ChatMessagesContentProps) {
     setState(e.target.value);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      send();
+    }
+  };
+
   return (
     <>
       <div css={mainStyle}>
@@ -70,6 +76,7 @@ export function ChatMessagesContent({ chatRoomId }: ChatMessagesContentProps) {
             type="message" id="inputField" css={messageInputStyle}
             onChange={(e: any) => handleChange(e, setChatMessageInput)}
             value={chatMessageInput}
+            onKeyDown={handleKeyDown}
           />
           <Button
             type="submit" id="inputButton" css={sendButtonStyle}
