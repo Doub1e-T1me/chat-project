@@ -1,8 +1,17 @@
+import {env} from "@/configures/env.ts";
 
-const host = "localhost";
-const port = 8080;
+const protocol = env.VITE_PROTOCOL;
+const host = env.VITE_HOST
+const port = env.VITE_PORT
+const domain = `${host}:${port}`;
+const endpoint = `${protocol}://${domain}`;
 
 export const consts = {
-  endpoint: `http://${host}:${port}`,
-  domain: `${host}:${port}`,
+  isDev: env.MODE === "development",
+  isProd: env.MODE === "production",
+  protocol,
+  host,
+  port,
+  domain,
+  endpoint,
 }

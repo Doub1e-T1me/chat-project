@@ -55,11 +55,12 @@ export type ChatMessage = {
 export type ChatRoom = {
   __typename?: 'ChatRoom';
   chatMessages?: Maybe<Array<ChatMessage>>;
+  chatUserCnt: Scalars['Int']['output'];
   chatUsers?: Maybe<Array<ChatUser>>;
   createdAt: Scalars['DateTime']['output'];
   createdBy: Account;
+  hasPassword: Scalars['Boolean']['output'];
   id: Scalars['Long']['output'];
-  password?: Maybe<Scalars['String']['output']>;
   title: Scalars['String']['output'];
   type: ChatRoomType;
 };
@@ -331,11 +332,20 @@ export type Friend = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addFriend: Friend;
   createAccount: Account;
   createChatRoom: ChatRoom;
+  createChatRoomByFriend: ChatRoom;
   createChatUser: ChatUser;
+  createChatUserFromParticipant: ChatUser;
   deleteChatRoom: ChatRoom;
   deleteChatUserMe: ChatUser;
+};
+
+
+export type MutationAddFriendArgs = {
+  fromAccountId: Scalars['Long']['input'];
+  toAccountId: Scalars['Long']['input'];
 };
 
 
@@ -349,9 +359,20 @@ export type MutationCreateChatRoomArgs = {
 };
 
 
+export type MutationCreateChatRoomByFriendArgs = {
+  friendId: Scalars['Long']['input'];
+};
+
+
 export type MutationCreateChatUserArgs = {
   chatRoomId: Scalars['Long']['input'];
   password?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type MutationCreateChatUserFromParticipantArgs = {
+  accountId: Scalars['Long']['input'];
+  chatRoomId: Scalars['Long']['input'];
 };
 
 
@@ -377,6 +398,11 @@ export type Query = {
   chatRooms?: Maybe<Array<ChatRoom>>;
   chatRoomsAll?: Maybe<Array<ChatRoom>>;
   chatUsersAll?: Maybe<Array<ChatUser>>;
+};
+
+
+export type QueryAccountArgs = {
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 

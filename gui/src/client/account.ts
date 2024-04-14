@@ -1,6 +1,5 @@
 import {gql} from "@apollo/client";
 import {consts} from "@/configures/consts.ts";
-import {useQuery} from "@/lib/web/apollo.ts";
 import {AccountCreation} from "@/graphql/types.ts";
 import {post} from "@/lib/web/http.ts";
 
@@ -23,24 +22,6 @@ export const myInfoQL = gql`
     ${accountColumns}
 `;
 
-export const myFriendsQL = gql`
-    query myFriends {
-        account {
-            ...accountColumns
-            friends {
-                to {
-                ...accountColumns
-                }
-            }
-        }
-    }
-    ${accountColumns}
-`;
-
-export function useMyFriends() {
-  return useQuery(myFriendsQL);
-}
-
 export function signup(creation: AccountCreation) {
   return post(`${consts.endpoint}/api/auth/signup`, creation);
 }
@@ -61,3 +42,12 @@ export function login(req: LoginRequest, remember: boolean) {
 export function logout() {
   return post(`${consts.endpoint}/api/auth/logout`, null);
 }
+
+export const getAccountByUsername = gql`
+  query GetAccountByUsername($username: String!) {
+      account(username: $username) {
+          ...accountColumns
+      }
+  }
+  ${accountColumns}
+`;

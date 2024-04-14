@@ -1,0 +1,15 @@
+services:
+  chat-db:
+    image: mysql:8.0.36-oraclelinux8
+    container_name: chat-db
+    ports:
+      - "11731:11731"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: "chat_db"
+      MYSQL_TCP_PORT: 11731
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./assets/initdb.d:/docker-entrypoint-initdb.d
